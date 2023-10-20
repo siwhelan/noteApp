@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+  background-color: #f4f4f4;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Makes the entire card have a pointer cursor */
+.card.mb-3 {
+  cursor: pointer;
+}
+
+/* Changes the background color and adds a slight shadow when hovering over the card */
+.card.mb-3:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Reverts the title color when hovering over the entire card, for better contrast */
+.card.mb-3:hover .card-header h5 {
+  color: #0056b3; /* Slightly darker than the default */
+}
