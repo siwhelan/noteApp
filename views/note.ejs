@@ -15,14 +15,53 @@
       <div class="jumbotron text-center">
         <h1><%= note.title %></h1>
       </div>
-      <div class="card mb-3">
+      <div class="card mb-3 position-relative">
         <div class="card-header">Note #<%= note.noteNumber %></div>
         <div class="card-body">
           <p class="card-text"><%= note.content %></p>
         </div>
+
+        <!-- Button to delete a note. When clicked, it calls the 'deleteNote' function defined below
+          with the noteNumber as an argument-->
+        <button
+          class="btn position-absolute top-0 end-0"
+          style="transform: translate(10%, -10%)"
+          data-note-number="<%= note.noteNumber %>"
+          onclick="deleteNote(this)"
+        >
+          x
+        </button>
       </div>
-      <a href="/notes" class="btn btn-secondary">Back to all notes</a>
+      <% }) %> <% } else { %>
+      <div class="alert alert-info" role="alert">No notes found.</div>
+      <% } %>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Function to handle note deletion -->
+    <script>
+      function deleteNote(buttonElement) {
+        // Retrieve the note number from the button's data attribute.
+        const noteNumber = buttonElement.getAttribute("data-note-number");
+
+        // Prompt the user to confirm the deletion.
+        if (confirm("Are you sure you want to delete this note?")) {
+          // Send a DELETE request to the server to delete the note.
+          fetch(`/notes/${noteNumber}`, {
+            method: "DELETE",
+          }).then((response) => {
+            // Check the response status.
+            if (response.ok) {
+              // If deletion was successful, redirect to the list of all notes.
+              window.location.href = "/notes";
+            } else {
+              // If there was an error, display an alert to the user.
+              alert("Failed to delete the note.");
+            }
+          });
+        }
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     // 200: OK - Response for successful requests
     res.status(200).render("index", { notes });
   } catch (error) {
-    // 500: Internal Server Error - Generic error message
+    // 500: Internal Server Error
     res.status(500).send("Error retrieving notes");
   }
 });
@@ -36,6 +36,10 @@ router.post("/", async (req, res) => {
 });
 
 // Get a single note by its noteNumber
+// Use parseInt to convert the string noteNumber (like "5") to an integer
+// req.params captures values in the URL path (e.g., "/5" becomes { noteNumber: "5" }),
+// which simplifies data extraction, providing an easier way to work with dynamic parts of URLs
+
 router.get("/:noteNumber", async (req, res) => {
   try {
     const noteNumber = parseInt(req.params.noteNumber);
@@ -48,6 +52,19 @@ router.get("/:noteNumber", async (req, res) => {
     }
   } catch (error) {
     res.status(500).send("Internal server error");
+  }
+});
+
+// Delete a note by its noteNumber
+router.delete("/:noteNumber", async (req, res) => {
+  try {
+    const noteNumber = parseInt(req.params.noteNumber);
+    await Note.deleteOne({ noteNumber: noteNumber });
+
+    res.status(200).send("Note deleted successfully");
+  } catch (error) {
+    console.error("Error in DELETE /notes:", error);
+    res.status(500).send("Error deleting the note");
   }
 });
 

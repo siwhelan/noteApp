@@ -23,5 +23,5 @@ body {
 
 /* Reverts the title color when hovering over the entire card, for better contrast */
 .card.mb-3:hover .card-header h5 {
-  color: #0056b3; /* Slightly darker than the default */
+  color: #0056b3;
 }
