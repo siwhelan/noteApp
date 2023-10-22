@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  # MongoDB
+  mongo_db:
+    container_name: noteApp_db_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2717:27017 # for use with mongosh in terminal
+    volumes:
+      - mongo_db:/data/db
+
+  # Node API
+  api:
+    container_name: noteApp_API_container
+    build: .
+    ports:
+      - 3000:3000
+    env_file: .env
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db: {}
