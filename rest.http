@@ -27,4 +27,3 @@ Content-Type: application/json
 
 ### DELETE a note by its noteNumber (e.g., 5)
 DELETE http://localhost:3000/notes/3 HTTP/1.1
-

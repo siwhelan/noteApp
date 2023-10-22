@@ -75,4 +75,55 @@ router.delete("/:noteNumber", async (req, res) => {
   }
 });
 
+// Display the edit form for a note
+router.get("/edit/:noteNumber", async (req, res) => {
+  try {
+    // Extract the noteNumber from the URL parameter and parse it into an integer.
+    const noteNumber = parseInt(req.params.noteNumber);
+
+    // Query the database to find a note with the specified noteNumber.
+    const note = await Note.findOne({ noteNumber: noteNumber });
+
+    // If the note is found, render the "edit" template with the note's data.
+    if (note) {
+      res.render("edit", { note });
+    } else {
+      // If the note is not found, respond with a 404 Not Found
+      res.status(404).send("Note not found");
+    }
+  } catch (error) {
+    // Handle any unexpected errors with a 500 (Internal Server Error) response.
+    res.status(500).send("Internal server error");
+  }
+});
+
+// Handle the update of a note
+router.post("/update/:noteNumber", async (req, res) => {
+  try {
+    // Extract the noteNumber from the URL parameter and parse it into an integer.
+    const noteNumber = parseInt(req.params.noteNumber);
+
+    // Extract the updated title and content from the request body.
+    const { title, content } = req.body;
+
+    // Update the note in the database with the new title and content.
+    const updatedNote = await Note.findOneAndUpdate(
+      { noteNumber: noteNumber },
+      { title, content },
+      { new: true } // Returns the updated document
+    );
+
+    // If the update is successful and a note is found, redirect to the note's individual page.
+    if (updatedNote) {
+      res.redirect(`/notes/${noteNumber}`);
+    } else {
+      // If the note is not found, respond with a 404 (Not Found) status.
+      res.status(404).send("Note not found");
+    }
+  } catch (error) {
+    // Handle any unexpected errors with a 500 (Internal Server Error) response.
+    res.status(500).send("Internal server error");
+  }
+});
+
 module.exports = router;
