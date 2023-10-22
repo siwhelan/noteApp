@@ -20,9 +20,16 @@ router.post("/", async (req, res) => {
   try {
     const { title, content } = req.body;
 
-    // Determine new note's number by counting existng notes and adding 1
-    const noteCount = await Note.countDocuments();
-    const noteNumber = noteCount + 1;
+    // Logic to assign a unique number to the new note by counting the total number of notes,
+    // selecting the one with the highest noteNumber and adding 1. This means that the new
+    // noteNumber is always one greater than the highest existing noteNumber, ensuring uniqueness and
+    // avoiding 'duplicate key error' if any notes are deleted.
+    const lastNote = await Note.findOne().sort({ noteNumber: -1 });
+    let noteNumber = 1;
+
+    if (lastNote) {
+      noteNumber = lastNote.noteNumber + 1;
+    }
 
     const note = new Note({ title, content, noteNumber });
     await note.save();
