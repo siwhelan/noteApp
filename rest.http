@@ -1,0 +1,30 @@
+###
+# This .http file works with the VSCode REST Client extension for easy API testing.
+# It lets you define and test HTTP requests without external tools such as Postman etc
+#
+# How to Use:
+# 1. Install the REST Client extension in VSCode.
+# 2. Open this file.
+# 3. Click "Send Request" above an HTTP method to run it.
+#
+# Note: Ensure your app runs on localhost:3000 or adjust the URL to suit.
+###
+
+### GET all notes
+GET http://localhost:3000/notes HTTP/1.1
+
+### GET a specific note by its noteNumber (e.g., 5)
+GET http://localhost:3000/notes/1 HTTP/1.1
+
+### POST a new note
+POST http://localhost:3000/notes HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Sample Note",
+  "content": "This is a sample note."
+}
+
+### DELETE a note by its noteNumber (e.g., 5)
+DELETE http://localhost:3000/notes/3 HTTP/1.1
+
