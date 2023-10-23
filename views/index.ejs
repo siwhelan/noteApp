@@ -49,30 +49,40 @@
 
       <% if (notes.length > 0) { %>
         <% notes.forEach(note => { %>
-            <!-- Card for each note -->
-            <div class="card mb-3 position-relative">
-                
-                <!-- Anchor wrapping the card elements, making them clickable and directing the user to the note's individual view. -->
-                <a href="/notes/<%= note.noteNumber %>" class="text-decoration-none text-dark">
-                    <div class="card-header">
-                        <h5><%= note.noteNumber %>. <%= note.title %></h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text"><%= note.content %></p>
-                    </div>
-                </a>
-                
-                <!-- Button to delete a note. When clicked, it calls the 'deleteNote' function defined below with the noteNumber as an argument-->
-                <button
-                    class="btn position-absolute top-0 end-0"
-                    style="transform: translate(10%, -10%)"
-                    data-note-number="<%= note.noteNumber %>"
-                    onclick="deleteNote(this)"
-                >
-                    x
-                </button>
-            </div>
-        <% }) %>
+          <!-- Card for each note -->
+          <div class="card mb-3 position-relative">
+              
+              <!-- Anchor wrapping the card elements, making them clickable and directing the user to the note's individual view. -->
+              <a href="/notes/<%= note.noteNumber %>" class="text-decoration-none text-dark">
+                  <div class="card-header">
+                      <h5><%= note.noteNumber %>. <%= note.title %></h5>
+                  </div>
+                  <div class="card-body">
+                      <p class="card-text"><%= note.content %></p>
+                  </div>
+                  <div class="card-footer">
+                    <!-- Display created timestamp if it exists -->
+                    <% if (note.createdAt) { %>
+                        <small class="text-muted">Created: <%= note.createdAt.toLocaleString() %></small>
+                    <% } %>
+                    <!-- Display updated timestamp if it exists -->
+                    <% if (note.updatedAt) { %>
+                        <small class="text-muted">Updated: <%= note.updatedAt.toLocaleString() %></small>
+                    <% } %>
+                </div>
+              </a>
+              
+              <!-- Button to delete a note. When clicked, it calls the 'deleteNote' function defined below with the noteNumber as an argument-->
+              <button
+                  class="btn position-absolute top-0 end-0"
+                  style="transform: translate(10%, -10%)"
+                  data-note-number="<%= note.noteNumber %>"
+                  onclick="deleteNote(this)"
+              >
+                  x
+              </button>
+          </div>
+      <% }) %>
     <% } else { %>
         <!-- Display the 'No notes found' alert if the notes array is empty -->
         <div class="alert alert-info" role="alert">
