@@ -33,6 +33,7 @@ afterAll(async () => {
   await mongoServer.stop();
 });
 
+// Test to check all notes
 describe("GET /notes", () => {
   it("should respond with 200 OK", async () => {
     const response = await request(app).get("/notes");
@@ -40,6 +41,7 @@ describe("GET /notes", () => {
   });
 });
 
+// Test to check new note creation
 describe("POST /notes", () => {
   it("should respond with a redirect on post", async () => {
     const response = await request(app).post("/notes").send({
@@ -61,6 +63,7 @@ async function getNextNoteNumber() {
   return lastNote && lastNote.noteNumber ? lastNote.noteNumber + 1 : 1;
 }
 
+// Test retrieval of a note by it's number
 describe("GET /notes/:noteNumber", () => {
   let noteNumber;
 
@@ -86,10 +89,22 @@ describe("GET /notes/:noteNumber", () => {
   });
 });
 
+// Test response for a non-existing note
 describe("GET /notes/:noteNumber", () => {
   it("should respond with 404 Not Found for non-existent noteNumber", async () => {
     // Try fetching a note using a non-existent noteNumber and expect a 404 Not Found status.
     const response = await request(app).get("/notes/9999");
     expect(response.status).toBe(404);
+  });
+});
+
+// Test for a note created with incorrect fields
+describe("POST /notes", () => {
+  it("should respond with a 400 Bad Request on post", async () => {
+    const response = await request(app).post("/notes").send({
+      title: 12,
+      content: 34567,
+    });
+    expect(response.status).toBe(400);
   });
 });

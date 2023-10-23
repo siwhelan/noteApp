@@ -20,6 +20,11 @@ router.post("/", async (req, res) => {
   try {
     const { title, content } = req.body;
 
+    // Basic input validation
+    if (typeof title !== "string" || typeof content !== "string") {
+      return res.status(400).send("Invalid input data");
+    }
+
     // Logic to assign a unique number to the new note by counting the total number of notes,
     // selecting the one with the highest noteNumber and adding 1. This means that the new
     // noteNumber is always one greater than the highest existing noteNumber, ensuring uniqueness and
