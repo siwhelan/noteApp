@@ -46,6 +46,7 @@ describe("GET /notes", () => {
   });
 });
 
+// Test POST new note
 describe("POST /notes", () => {
   it("should respond with a redirect on post", async () => {
     const response = await request(app).post("/notes").send({
@@ -64,6 +65,7 @@ describe("POST /notes", () => {
   });
 });
 
+// Test GET by noteNumber
 describe("GET /notes/:noteNumber", () => {
   let noteNumber;
 
@@ -88,10 +90,10 @@ describe("GET /notes/:noteNumber", () => {
   });
 });
 
+// Test DELETE by noteNumber
 describe("DELETE /notes/:noteNumber", () => {
   it("should delete a product", async () => {
     const res = await request(app).delete("/notes/1");
     expect(res.statusCode).toBe(200);
   });
 });
-
