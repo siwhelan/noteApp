@@ -31,7 +31,7 @@
         </div>
         <!-- Text box for note content -->
         <div class="mb-3">
-          <label for="content" class="form-label">Content</label>
+          <label for="content" class="form-label">Note</label>
           <textarea
             name="content"
             id="content"
@@ -63,11 +63,11 @@
                   <div class="card-footer">
                     <!-- Display created timestamp if it exists -->
                     <% if (note.createdAt) { %>
-                        <small class="text-muted">Created: <%= note.createdAt.toLocaleString() %></small>
+                        <small class="text-muted">Created: <%= note.createdAt.toLocaleString("en-GB") %></small>
                     <% } %>
                     <!-- Display updated timestamp if it exists -->
                     <% if (note.updatedAt) { %>
-                        <small class="text-muted">Updated: <%= note.updatedAt.toLocaleString() %></small>
+                        <small class="text-muted">Updated: <%= note.updatedAt.toLocaleString("en-GB") %></small>
                     <% } %>
                 </div>
               </a>
