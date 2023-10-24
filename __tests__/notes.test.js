@@ -92,8 +92,13 @@ describe("GET /notes/:noteNumber", () => {
 
 // Test DELETE by noteNumber
 describe("DELETE /notes/:noteNumber", () => {
-  it("should delete a product", async () => {
+  it("should delete a note", async () => {
     const res = await request(app).delete("/notes/1");
     expect(res.statusCode).toBe(200);
+  });
+
+  it("should respond with 404 Not Found for non-existent noteNumber", async () => {
+    const response = await request(app).get("/notes/9999");
+    expect(response.status).toBe(404);
   });
 });
